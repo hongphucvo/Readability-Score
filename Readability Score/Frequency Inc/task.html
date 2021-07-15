@@ -1,0 +1,85 @@
+<h2>Description</h2>
+
+<p>Now you know different formulas to find the readability score. However, none of them takes into account one of the most important metrics — the word frequency. Let's fix it!</p>
+
+<p>In 1948, Edgar Dale and Jeanne Chall invented a formula that determines how difficult a text is according to the number of words that are, most likely, unknown to readers. The formulas we referred to earlier based the score on the number of words and sentences only. Our new formula looks like this:</p>
+
+<p><span class="math-tex">\(score = 0.1579 * {difficult \ words \over words} * 100 + 0.0496 * {words \over sentences}\)</span></p>
+
+<p>If the amount of difficult (that is, unknown to readers) words is less than 5%, the score does not need any adjustment. Otherwise, you need to add 3.6365 to the score. If you are interested, you can learn more about this formula on the <a target="_blank" href="https://readabilityformulas.com/new-dale-chall-readability-formula.php" rel="nofollow noopener noreferrer" target="_blank">Readability Formulas</a> site.</p>
+
+<p>Originally, "difficult words" were the ones that had not been included in the word list developed by the authors of the formula. We do not know for certain, what was on that list, so we will use the so-called "Longman Communication 3000". It is a list of the 3000 most frequent words in English, based on a statistical analysis of a very large number of texts. It will be given to you as a separate file with each word on a new line.</p>
+
+<p>The table below contains scores and the corresponding grade level for the score described above.</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+	<tbody>
+		<tr>
+			<td>4.9 or lower</td>
+			<td>about 10-year-olds</td>
+		</tr>
+		<tr>
+			<td>5.0–5.9</td>
+			<td>about 12-year-olds</td>
+		</tr>
+		<tr>
+			<td>6.0–6.9</td>
+			<td>about 14-year-olds</td>
+		</tr>
+		<tr>
+			<td>7.0–7.9</td>
+			<td>about 16-year-olds</td>
+		</tr>
+		<tr>
+			<td>8.0–8.9</td>
+			<td>about 18-year-olds</td>
+		</tr>
+		<tr>
+			<td>9.0–9.9</td>
+			<td>
+			<p>about 24-year-olds</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><div class="alert alert-primary"> If the score is 10 or more in this project, regard the age to be equal 25 for all the metrics, except for the last one. </div></p>
+
+<h2>Objectives</h2>
+
+<ol>
+	<li>Read the text from the file named 'in.txt'.</li>
+	<li>Read the difficult words from another file, named 'words.txt'.</li>
+	<li>Count the number of words, "difficult words", sentences, characters, syllables, and polysyllables in the text.</li>
+	<li>Count the scores according to the formulas above, including the new one.</li>
+	<li>Add an option to choose the metrics to display.</li>
+	<li>Count the average score.</li>
+	<li>Print the information in the way, shown in the examples.</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<pre><code class="language-no-highlight">&gt;python3 readability.py --infile in.txt --words words.txt
+The text is:
+Readability is the ease with which a reader can understand a written text. In natural language, the readability of text depends on its content and its presentation. Researchers have used various factors to measure readability. Readability is more than simply legibility, which is a measure of how easily a reader can distinguish individual letters or characters from each other. Higher readability eases reading effort and speed for any reader, but it is especially important for those who do not have high reading comprehension. In readers with poor reading comprehension, raising the readability level of a text from mediocre to good can make the difference between success and failure.
+
+Words: 108
+Difficult words: 25
+Sentences: 6
+Characters: 580
+Syllables: 200
+Polysyllables: 25
+Enter the score you want to calculate (ARI, FK, SMOG, CL, PB, all): all
+
+Automated Readability Index: 12.86 (about 18-year-olds)
+Flesch–Kincaid readability tests: 13.28 (about 24-year-olds)
+Simple Measure of Gobbledygook: 14.79 (about 25-year-olds)
+Coleman–Liau index: 14.13 (about 25-year-olds)
+Probability-based score: 8.18 (about 18-year-olds)
+
+This text should be understood in average by 22.0-year-olds.
+</code></pre>

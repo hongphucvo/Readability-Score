@@ -1,0 +1,48 @@
+type: edu
+files:
+- name: tests.py
+  visible: false
+  text: |
+    from typing import List, Any
+    from hstest.stage_test import StageTest
+    from hstest.test_case import TestCase
+    from hstest.check_result import CheckResult
+
+
+    class TestStage1(StageTest):
+
+        def generate(self) -> List[TestCase]:
+            list_tests = [
+                TestCase(stdin="This text is simple to read!"),
+                TestCase(stdin="This text is hard to read. "
+                               "It contains a lot of sentences as well as a lot of words in each sentence."),
+                TestCase(stdin="1" * 99),
+                TestCase(stdin=" " * 100),
+                TestCase(stdin="q" * 101)
+            ]
+
+            for test in list_tests:
+                test.attach = test.input
+
+            return list_tests
+
+        def solve(self, att):
+            return "HARD" if len(att) > 100 else "EASY"
+
+        def check(self, reply: str, attach) -> CheckResult:
+            if self.solve(attach) != reply.strip():
+                return CheckResult.wrong("Your result is wrong")
+            return CheckResult.correct()
+
+
+    if __name__ == '__main__':
+        TestStage1("readability.readability").run_tests()
+  learner_created: false
+- name: readability/readability.py
+  visible: true
+  text: |
+    # write your code here
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/155/stages/808/implement#comment
+status: Solved
+record: 2

@@ -1,0 +1,12 @@
+type: hyperskill
+title: Readability Score
+language: English
+summary: We all love different kinds of books. As we grow up, we are able to digest
+  more difficult texts easier. How to assess the difficulty of a given text? How can
+  you make your program do that? Write a program that determines the difficulty of
+  a text and predicts the grade level needed to understand this text.<br/><br/>Learn
+  more at <a href="https://hyperskill.org">https://hyperskill.org/projects/155</a>
+programming_language: Python
+content:
+- Readability Score
+mode: Study

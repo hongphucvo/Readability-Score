@@ -1,0 +1,61 @@
+<h2>Description</h2>
+
+<p>In this stage, we will refer to other scientific approaches to readability.</p>
+
+<p>Take one more look at different grade levels/age brackets and corresponding scores. You can use the <a target="_blank" href="https://en.wikipedia.org/wiki/Automated_readability_index" rel="noopener noreferrer nofollow">Wikipedia article</a> on ARI. <strong>The table is suitable for all the algorithms described in this stage</strong>. To calculate the age, use <strong>the upper bound </strong>range. For example, if the range is <code class="java">12-13-year-olds</code> then the upper bound is <code class="java">13-year-olds</code>.</p>
+
+<p><div class="alert alert-primary"> If the score is 14 or more in this project, regard the age to be equal 25. </div></p>
+
+<p>The first algorithm is the <strong>Flesch-Kincaid Readability Test</strong>. First, you need to create a function that calculates the number of syllables in a word. The formula is given below. You can find more information about the F-K tests in the <a target="_blank" href="https://readabilityformulas.com/flesch-reading-ease-readability-formula.php" rel="nofollow noopener noreferrer" target="_blank">article</a> by Readability Formulas. You can use the second formula to calculate the index; it allows you to calculate the age of a person using the same table from the Automated Readability Index.</p>
+
+<p><span class="math-tex">\(score = 0.39 * {words \over sentences} + 11.8 * {syllables \over words} - 15.59\)</span></p>
+
+<p>The second algorithm is the <strong>SMOG Index</strong>. It stands for Simple Measure of Gobbledygook. To calculate it, you need to count the number of polysyllables (words with more than two syllables). The formula is shown below. You can find out more in the <a target="_blank" href="https://readabilityformulas.com/smog-readability-formula.php" rel="nofollow noopener noreferrer" target="_blank">article</a> by Readability Formulas. Use the abovementioned table from the first link to calculate the age bracket.</p>
+
+<p><span class="math-tex">\(score = 1.043 * \sqrt{polysyllables \ * \ 30 \over sentences} + 3.1291\)</span></p>
+
+<p>The next one is the <strong>Coleman-Liau Index</strong>. The formula is given below. As usual, refer to the Readability Formulas <a target="_blank" href="https://readabilityformulas.com/coleman-liau-readability-formula.php" rel="noopener noreferrer nofollow" target="_blank">article</a> for more info. L is the average number of characters per 100 words, S is the average number of sentences per 100 words. Like with other indexes, the result is a minimum grade level required to understand this text.</p>
+
+<p><span class="math-tex">\(score = 0.0588 \ ∗ \ L−0.296 \ ∗ \ S\ −\ 15.8\)</span></p>
+
+<p>In this stage, implement all three approaches to your program. Don't forget about the <strong>Automated Readability Index</strong>! You should also implement an option to choose all the methods at the same time.</p>
+
+<p>To count the number of syllables, use the letters a, e, i, o, u, y as vowels. You can use four simple rules to count the syllables:</p>
+
+<p>1. Count the number of vowels in the word.<br>
+2. Omit the so-called double vowels (for example, "rain" has 2 vowels but only 1 syllable).<br>
+3. Subtract the silent vowels (for example, "e" in "side" is silent, the word has only 1 syllable).<br>
+4. If it turns out that the word contains 0 vowels, then consider this word a monosyllable.</p>
+
+<h2>Objectives</h2>
+
+<ol>
+	<li>Read the text from the user input.</li>
+	<li>Count the number of characters, syllables, polysyllables, words, and sentences in the text.</li>
+	<li>Count the scores according to the formulas above.</li>
+	<li>Add an option to choose the metrics to display.</li>
+	<li>Count the average score.</li>
+	<li>Print the information in the way, shown in the examples.</li>
+</ol>
+
+<h2>Example</h2>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<pre><code class="language-no-highlight">&gt; python3 readabilityscore.py --infile in.txt
+The text is:
+This is the front page of the Simple English Wikipedia. Wikipedias are places where people work together to write encyclopedias in different languages. We use Simple English words and grammar here. The Simple English Wikipedia is for everyone! That includes children and adults who are learning English. There are 142,262 articles on the Simple English Wikipedia. All of the pages are free to use. They have all been published under both the Creative Commons License and the GNU Free Documentation License. You can help here! You may change these pages and make new pages. Read the help pages and other good pages to learn how to write pages here. If you need help, you may ask questions at Simple talk. Use Basic English vocabulary and shorter sentences. This allows people to understand normally complex terms or phrases.
+
+Words: 137
+Sentences: 14
+Characters: 687
+Syllables: 210
+Polysyllables: 17
+Enter the score you want to calculate (ARI, FK, SMOG, CL, all): all
+
+Automated Readability Index: 7.08 (about 13-year-olds).
+Flesch–Kincaid readability tests: 6.31 (about 12-year-olds).
+Simple Measure of Gobbledygook: 9.42 (about 15-year-olds).
+Coleman–Liau index: 10.66 (about 17-year-olds).
+
+This text should be understood in average by 14.25-year-olds.</code></pre>

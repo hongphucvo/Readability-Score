@@ -1,0 +1,58 @@
+type: edu
+files:
+- name: readability/readability.py
+  visible: true
+  text: |-
+    # write your code here
+    sent=str(input())
+    if(len(sent)>100): print("HARD")
+    else:print("EASY")
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |+
+    from typing import List, Any
+    from hstest.stage_test import StageTest
+    from hstest.test_case import SimpleTestCase
+    from hstest.check_result import CheckResult
+
+
+    class TestStage2(StageTest):
+
+        wrong_res = "Your result is incorrect"
+
+        def generate(self) -> List[SimpleTestCase]:
+
+            return [SimpleTestCase(stdin="This text is simple to read! "
+                                         "It has on average less than 10 words per sentence.",
+                                   stdout="EASY", feedback=self.wrong_res),
+                    SimpleTestCase(stdin="This text is hard to read. "
+                                         "It contains a lot of sentences as well as a lot of words in each sentence",
+                                   stdout="HARD", feedback=self.wrong_res),
+                    SimpleTestCase(stdin="1 " * 99 + "1. 1. 1.", stdout="HARD",
+                                   feedback=self.wrong_res),
+                    SimpleTestCase(stdin="12, 12 13 14 14 14, 12 21 23 89! 75 12, 134 241 123, "
+                                         "123 123 123, 123 123 123? 123, 123 123 123 23 123 213 123 123 123.",
+                                   stdout="HARD", feedback=self.wrong_res),
+                    SimpleTestCase(stdin="12, 12 13 14 14 14, 12 21 23 89! 75 12, 241 123, 123 123 123, "
+                                         "123 123 123? 123, 123 123 123 23 123 213 123 123 123.",
+                                   stdout="EASY", feedback=self.wrong_res),
+                    SimpleTestCase(stdin="Readability is the ease with which a reader can understand a written text. "
+                                         "In natural language, the readability of text depends on its content "
+                                         "and its presentation. Researchers have used various factors "
+                                         "to measure readability. And that is it!",
+                                   stdout="EASY", feedback=self.wrong_res)]
+
+
+    if __name__ == '__main__':
+        TestStage2("readability.readability").run_tests()
+
+
+
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/155/stages/809/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 13 Jul 2021 01:31:49 UTC
+record: 1

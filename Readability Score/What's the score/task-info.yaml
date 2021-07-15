@@ -1,0 +1,163 @@
+type: edu
+custom_name: What's the score?
+files:
+- name: readability/readability.py
+  visible: true
+  text: "# write your code here\npara = str(input())\nimport re\nsent=para.split(\"\
+    \\. |\\! |\\? \")\nleng=[]\ntotal=0\nfor i in sent:\n    leng.append(len(i.split()))\n\
+    \    total+=leng[-1]\n    \nif(total/len(leng)>10): print(\"HARD\")\nelse:print(\"\
+    EASY\")"
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |
+    from typing import List, Any
+    from hstest.stage_test import StageTest
+    from hstest.test_case import TestCase
+    from hstest.check_result import CheckResult
+
+
+    class TestClue:
+
+        def __init__(self, words, sentences, characters, score, age):
+            self.words = words
+            self.sentences = sentences
+            self.characters = characters
+            self.score = score
+            self.age = age
+
+
+    class TestTheThird(StageTest):
+
+        def generate(self) -> List[TestCase]:
+            list_tests = [
+                TestCase(attach=TestClue('108', '6', '580', 12.86, '18-24'),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "Readability is " +
+                                       "the ease with which a reader can " +
+                                       "understand a written text. In natural " +
+                                       "language, the readability of text depends " +
+                                       "on its content and its presentation. " +
+                                       "Researchers have used various factors " +
+                                       "to measure readability. Readability is " +
+                                       "more than simply legibility, which is a " +
+                                       "measure of how easily a reader can distinguish " +
+                                       "individual letters or characters from each other. " +
+                                       "Higher readability eases reading effort and speed " +
+                                       "for any reader, but it is especially important for " +
+                                       "those who do not have high reading comprehension. " +
+                                       "In readers with poor reading comprehension, raising " +
+                                       "the readability level of a text from mediocre to good " +
+                                       "can make the difference between success and failure",
+                         }),
+
+                TestCase(attach=TestClue('100', '10', '476', 5.98, '11-12'),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "This is the page of the Simple English Wikipedia. " +
+                                       "A place where people work together to write encyclopedias " +
+                                       "in different languages. That includes children and adults " +
+                                       "who are learning English. There are 142,262 articles on the " +
+                                       "Simple English Wikipedia. All of the pages are free to use. " +
+                                       "They have all been published under both the Creative Commons" +
+                                       " License 3 and the GNU Free Documentation License. " +
+                                       "You can help here! You may change these pages and make new " +
+                                       "pages. Read the help pages and other good pages to learn " +
+                                       "how to write pages here. You may ask questions at Simple talk.",
+                         }),
+
+                TestCase(attach=TestClue('180', '13', '982', 11.19, '17-18'),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "Gothic architecture are building designs, " +
+                                       "as first pioneered in Western Europe in the Middle Ages. " +
+                                       "It began in France in the 12th century. The Gothic style " +
+                                       "grew out of Romanesque architecture. It lasted until the " +
+                                       "16th century. By that time the Renaissance style of " +
+                                       "architecture had become popular. The important features " +
+                                       "of Gothic architecture are the pointed arch, the ribbed " +
+                                       "vault, the flying buttress, and stained glass windows " +
+                                       "which are explained below. " +
+                                       "Gothic architecture is best known as the style of many " +
+                                       "of the great cathedrals, abbeys and churches of Europe. " +
+                                       "It is also the architecture of many castles, palaces, " +
+                                       "town halls, universities, and also some houses. " +
+                                       "Many church buildings still remain from this period. " +
+                                       "Even the smallest Gothic churches are often very beautiful, " +
+                                       "while many of the larger churches and cathedrals are " +
+                                       "thought to be priceless works of art. Many are listed " +
+                                       "with the United Nations Educational, Scientific and " +
+                                       "Cultural Organization (UNESCO) as World Heritage Sites. " +
+                                       "In the 19th century, the Gothic style became popular " +
+                                       "again, particularly for building churches and universities. " +
+                                       "This style is called Gothic Revival architecture.",
+                         })
+            ]
+
+            return list_tests
+
+        def check(self, reply: str, attach) -> CheckResult:
+            foundWords = False
+            foundSentences = False
+            foundChars = False
+            foundScore = False
+            foundAge = False
+
+            for stroka in reply.lower().split('\n'):
+                if "words:" in stroka:
+                    foundWords = True
+                    if attach.words not in stroka:
+                        return CheckResult.wrong("Wrong number of words")
+
+                if "sentences:" in stroka:
+                    foundSentences = True
+                    if attach.sentences not in stroka:
+                        return CheckResult.wrong("Wrong number of sentences")
+
+                if "characters:" in stroka:
+                    foundChars = True
+                    if attach.characters not in stroka:
+                        return CheckResult.wrong("Wrong number of characters")
+
+                if "score is:" in stroka:
+                    foundScore = True
+                    try:
+                        user_score = float(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse the score!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_score - attach.score) > 0.2:
+                        return CheckResult.wrong("Wrong score")
+
+                if "year" in stroka and "old" in stroka:
+                    foundAge = True
+                    if attach.age not in stroka:
+                        return CheckResult.wrong("Wrong age")
+
+            if not foundWords:
+                return CheckResult.wrong("There is no words amount")
+            if not foundSentences:
+                return CheckResult.wrong("There is no sentences amount")
+            if not foundChars:
+                return CheckResult.wrong("There is no characters amount")
+            if not foundScore:
+                return CheckResult.wrong("There is no score in output")
+            if not foundAge:
+                return CheckResult.wrong("There is no age in output")
+
+            return CheckResult.correct()
+
+
+    if __name__ == '__main__':
+        TestTheThird('readability.readability').run_tests()
+  learner_created: false
+- name: in.txt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/155/stages/810/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Tue, 13 Jul 2021 03:05:32 UTC
+record: 3

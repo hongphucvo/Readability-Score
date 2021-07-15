@@ -1,0 +1,263 @@
+type: edu
+custom_name: More formulas!
+files:
+- name: readability/readability.py
+  visible: true
+  text: "# write your code here\npara = str(input())\nimport re\nsent=para.split(\"\
+    \\. |\\! |\\? \")\nleng=[]\ntotal=0\nfor i in sent:\n    leng.append(len(i.split()))\n\
+    \    total+=leng[-1]\n    \nif(total/len(leng)>10): print(\"HARD\")\nelse:print(\"\
+    EASY\")"
+  learner_created: false
+- name: tests.py
+  visible: false
+  text: |
+    from typing import List, Any
+    from hstest.stage_test import StageTest
+    from hstest.test_case import TestCase
+    from hstest.check_result import CheckResult
+
+
+    class TestClue:
+
+        def __init__(self, words, sentences, characters, syllables, polysyllables,
+                     ari, fkri, smog, cli):
+            self.words = words
+            self.sentences = sentences
+            self.characters = characters
+            self.syllables = syllables
+            self.polysyllables = polysyllables
+            self.ari = ari
+            self.fkri = fkri
+            self.smog = smog
+            self.cli = cli
+
+
+    class TestTheFourth(StageTest):
+
+        def generate(self) -> List[TestCase]:
+            list_tests = [
+                TestCase(attach=TestClue(108, 6, 580, 196, 20,
+                                         12.86, 12.84, 13.56, 14.13),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "Readability is " +
+                                       "the ease with which a reader can " +
+                                       "understand a written text. In natural " +
+                                       "language, the readability of text depends " +
+                                       "on its content and its presentation. " +
+                                       "Researchers have used various factors " +
+                                       "to measure readability. Readability is " +
+                                       "more than simply legibility, which is a " +
+                                       "measure of how easily a reader can distinguish " +
+                                       "individual letters or characters from each other. " +
+                                       "Higher readability eases reading effort and speed " +
+                                       "for any reader, but it is especially important for " +
+                                       "those who do not have high reading comprehension. " +
+                                       "In readers with poor reading comprehension, raising " +
+                                       "the readability level of a text from mediocre to good " +
+                                       "can make the difference between success and failure",
+                         }, stdin='all'),
+
+                TestCase(attach=TestClue(137, 14, 687, 210, 17, 7.08, 6.31, 9.42, 10.66),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "This is the front page of the Simple English "
+                                       "Wikipedia. Wikipedias are places where people work "
+                                       "together to write encyclopedias in different languages. "
+                                       "We use Simple English words and grammar here. The Simple "
+                                       "English Wikipedia is for everyone! That includes children "
+                                       "and adults who are learning English. There are 142,262 "
+                                       "articles on the Simple English Wikipedia. All of the pages "
+                                       "are free to use. They have all been published under both "
+                                       "the Creative Commons License "
+                                       "and the GNU Free Documentation License. You can help here! "
+                                       "You may change these pages and make new pages. Read the help "
+                                       "pages and other good pages to learn how to write pages here. "
+                                       "If you need help, you may ask questions at Simple talk. Use "
+                                       "Basic English vocabulary and shorter sentences. This allows "
+                                       "people to understand normally complex terms or phrases.",
+                         }, stdin='all'),
+
+                TestCase(attach=TestClue(180, 13, 982, 317, 34, 11.19, 10.59, 12.37, 14.14),
+                         args=["--infile", "in.txt"],
+                         files={
+                             "in.txt": "Gothic architecture are building designs, " +
+                                       "as first pioneered in Western Europe in the Middle Ages. " +
+                                       "It began in France in the 12th century. The Gothic style " +
+                                       "grew out of Romanesque architecture. It lasted until the " +
+                                       "16th century. By that time the Renaissance style of " +
+                                       "architecture had become popular. The important features " +
+                                       "of Gothic architecture are the pointed arch, the ribbed " +
+                                       "vault, the flying buttress, and stained glass windows " +
+                                       "which are explained below. " +
+                                       "Gothic architecture is best known as the style of many " +
+                                       "of the great cathedrals, abbeys and churches of Europe. " +
+                                       "It is also the architecture of many castles, palaces, " +
+                                       "town halls, universities, and also some houses. " +
+                                       "Many church buildings still remain from this period. " +
+                                       "Even the smallest Gothic churches are often very beautiful, " +
+                                       "while many of the larger churches and cathedrals are " +
+                                       "thought to be priceless works of art. Many are listed " +
+                                       "with the United Nations Educational, Scientific and " +
+                                       "Cultural Organization (UNESCO) as World Heritage Sites. " +
+                                       "In the 19th century, the Gothic style became popular " +
+                                       "again, particularly for building churches and universities. " +
+                                       "This style is called Gothic Revival architecture.",
+                         }, stdin='all')
+            ]
+
+            return list_tests
+
+        def check(self, reply: str, attach) -> CheckResult:
+            found_words = False
+            found_sentences = False
+            found_chars = False
+            found_syllables = False
+            found_polysyllables = False
+
+            found_ari = False
+            found_fkt = False
+            found_smg = False
+            found_cli = False
+
+            print(reply.lower().split('\n'))
+
+            for stroka in reply.lower().split('\n'):
+                if "words:" in stroka:
+                    found_words = True
+                    try:
+                        user_words = int(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse words count!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_words - attach.words) > 5:
+                        return CheckResult.wrong(f"Wrong number of words. "
+                                                 f"Should be {attach.words} , but found {user_words}")
+
+                if "sentences:" in stroka:
+                    found_sentences = True
+                    try:
+                        user_sentences = int(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse sentences count!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_sentences - attach.sentences) > 1:
+                        return CheckResult.wrong(f"Wrong number of sentences. "
+                                                 f"Should be {attach.sentences}, but found {user_sentences}")
+
+                if "characters:" in stroka:
+                    found_chars = True
+                    try:
+                        user_characters = int(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse characters count!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_characters - attach.characters) > 10:
+                        return CheckResult.wrong(f"Wrong number of characters. "
+                                                 f"Should be {attach.characters}, but found {user_characters}")
+
+                if "polysyllables:" in stroka:
+                    found_polysyllables = True
+                    try:
+                        user_polysyllables = int(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse polysyllables count!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_polysyllables - attach.polysyllables) > 5:
+                        return CheckResult.wrong(f"Wrong number of polysyllables. "
+                                                 f"Should be {attach.polysyllables}, but found {user_polysyllables}")
+
+                if "syllables:" in stroka and "poly" not in stroka:
+                    found_syllables = True
+                    try:
+                        user_syllables = int(stroka.split(':')[-1])
+                    except ValueError:
+                        return CheckResult.wrong("Can't parse syllables count!"
+                                                 "\nYour output format should be like in examples.")
+                    if abs(user_syllables - attach.syllables) > 20:
+                        return CheckResult.wrong(f"Wrong number of syllables. "
+                                                 f"Should be {attach.syllables}, but found {user_syllables}")
+
+                if "enter the score" not in reply.lower():
+                    return CheckResult.wrong("The program should offer a user to choose the  metrics")
+
+                if "automated readability index" in stroka:
+                    found_ari = True
+                    rounded = int(attach.ari)
+                    actual = str(rounded)
+                    before = str(rounded - 1)
+                    after = str(rounded + 1)
+                    if not (actual in stroka or before in stroka or after in stroka):
+                        return CheckResult.wrong(f"Wrong Automated Readability Index score. Should be around {attach.ari}),"
+                                                 f" your output: \n {stroka}")
+                    if "year" not in stroka or "old" not in stroka:
+                        return CheckResult.wrong("No age in Automated Readability Index")
+
+                if stroka.startswith("flesch–kincaid"):
+                    found_fkt = True
+                    rounded = int(attach.fkri)
+                    actual = str(rounded)
+                    before = str(rounded - 1)
+                    after = str(rounded + 1)
+                    if not (actual in stroka or before in stroka or after in stroka):
+                        return CheckResult.wrong(f"Wrong Flesch–Kincaid score. Should be around {attach.fkri}),"
+                                                 f" your output: \n {stroka}")
+                    if "year" not in stroka or "old" not in stroka:
+                        return CheckResult.wrong("No age in Flesch–Kincaid")
+
+                if stroka.startswith("simple measure of gobbledygook"):
+                    found_smg = True
+                    rounded = int(attach.smog)
+                    actual = str(rounded)
+                    before = str(rounded - 1)
+                    after = str(rounded + 1)
+                    if not (actual in stroka or before in stroka or after in stroka):
+                        return CheckResult.wrong(
+                            f"Wrong Simple Measure of Gobbledygook score. Should be around {attach.smog}),"
+                            f" your output: \n {stroka}")
+                    if "year" not in stroka or "old" not in stroka:
+                        return CheckResult.wrong("No age in Simple Measure of Gobbledygook")
+
+                if stroka.startswith("coleman–liau"):
+                    found_cli = True
+                    rounded = int(attach.cli)
+                    actual = str(rounded)
+                    before = str(rounded - 1)
+                    after = str(rounded + 1)
+                    if not (actual in stroka or before in stroka or after in stroka):
+                        return CheckResult.wrong(f"Wrong Coleman–Liau score. Should be around {attach.cli}),"
+                                                 f" your output: \n {stroka}")
+                    if "year" not in stroka or "old" not in stroka:
+                        return CheckResult.wrong("No age in Coleman–Liau")
+
+            if not found_words:
+                return CheckResult.wrong("There is no words amount")
+            if not found_sentences:
+                return CheckResult.wrong("There is no sentences amount")
+            if not found_chars:
+                return CheckResult.wrong("There is no characters amount")
+            if not found_polysyllables:
+                return CheckResult.wrong("There is no polysyllables in output")
+            if not found_syllables:
+                return CheckResult.wrong("There is no syllables in output")
+            if not found_ari:
+                return CheckResult.wrong("There is no Automated Readability Index in output")
+            if not found_fkt:
+                return CheckResult.wrong("There is no Flesch–Kincaid readability tests in output")
+            if not found_smg:
+                return CheckResult.wrong("There is no Simple Measure of Gobbledygook in output")
+            if not found_cli:
+                return CheckResult.wrong("There is no Coleman–Liau index in output")
+
+            return CheckResult.correct()
+
+
+    if __name__ == '__main__':
+        TestTheFourth('readability.readability').run_tests()
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/155/stages/811/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 15 Jul 2021 02:48:37 UTC
+record: 4

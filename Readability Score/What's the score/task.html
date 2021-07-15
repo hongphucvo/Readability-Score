@@ -1,0 +1,108 @@
+<h2>Description</h2>
+
+<p>In this stage, you need to implement the <strong>A</strong><strong>utomated Readability Index</strong>. It was introduced in 1968 and was proved to be very reliable. The index is calculated with the following formula:</p>
+
+<p><span class="math-tex">\(score = 4.71*{ characters \over words} + 0.5 * {words \over sentences} - 21.43\)</span></p>
+
+<p>The table below contains scores and the corresponding age for the score described above.</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+	<tbody>
+		<tr>
+			<td>1</td>
+			<td>about 5-6-year-olds</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>about 7-8-year-olds</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>about 7-9-year-olds</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>about 9-10-year-olds</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>about 10-11-year-olds</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td>about 11-12-year-olds</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td>about 12-13-year-olds</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td>about 13-14-year-olds</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td>about 14-15-year-olds</td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td>about 15-16-year-olds</td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td>about 16-17-year-olds</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td>about 17-18-year-olds</td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td>about 18-24-year-olds</td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td>about 25-year-olds</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>In this stage, your program should read a file with a text. Pass the filename through command line arguments. The program should output the score and an approximate age needed to comprehend the text. Round the resulting score <strong>up</strong> to output the correct age bracket. Print how many characters, words, and sentences the text contains. Characters are any visible symbol (everything except spaces <code class="java"> </code>, new lines <code class="java">\n</code>, or tabulations <code class="java">\t</code>). The text can contain multiple lines. Analyze each of them.</p>
+
+<h2>Objectives</h2>
+
+<ol>
+	<li>Read the text from the user input.</li>
+	<li>Count the number of characters, words, and sentences in the text.</li>
+	<li>Calculate the score according to the formula.</li>
+	<li>Output the result.</li>
+	<li>Print the information in the way, shown in the examples.</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<pre><code class="language-no-highlight">&gt; python3 readabilityscore.py --infile in.txt
+The text is:
+Readability is the ease with which a reader can understand a written text. In natural language, the readability of text depends on its content and its presentation. Researchers have used various factors to measure readability. Readability is more than simply legibility, which is a measure of how easily a reader can distinguish individual letters or characters from each other. Higher readability eases reading effort and speed for any reader, but it is especially important for those who do not have high reading comprehension. In readers with poor reading comprehension, raising the readability level of a text from mediocre to good can make the difference between success and failure
+
+Words: 108
+Sentences: 6
+Characters: 580
+The score is: 12.86
+This text should be understood by 18-24-year-olds.</code></pre>
+
+<p><strong>Example 2</strong></p>
+
+<pre><code class="language-no-highlight">&gt; python3 readabilityscore.py --infile in.txt
+The text is:
+This is the page of the Simple English Wikipedia. A place where people work together to write encyclopedias in different languages. That includes children and adults who are learning English. There are 142,262 articles on the Simple English Wikipedia. All of the pages are free to use. They have all been published under both the Creative Commons License 3 and the GNU Free Documentation License. You can help here! You may change these pages and make new pages. Read the help pages and other good pages to learn how to write pages here. You may ask questions at Simple talk.
+
+Words: 100
+Sentences: 10
+Characters: 476
+The score is: 5.98
+This text should be understood by 11-12-year-olds.</code></pre>

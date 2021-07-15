@@ -1,0 +1,36 @@
+<h2>Description</h2>
+
+<p>The real text can be pretty long (or at least more than 100 characters) and still can be easy to read. We need another approach for such texts. Let's calculate the number of words in each sentence. If each sentence of the text contains a lot of words then this text is hard to read.</p>
+
+<p>Suppose that if the text contains more than 10 words per sentence on average, then this text is <code class="java">HARD</code>. If the average is equal to 10 or less, then the text should be considered <code class="java">EASY</code> . Don't worry, we will refer to more scientific ways in the next stages.</p>
+
+<p><div class="alert alert-primary">Don't forget that the sentences can end with a dot as well as with an exclamation mark and a question mark. But the last sentence may not have a punctuation mark at the end.</div></p>
+
+<p><div class="alert alert-primary">Regular expressions might be useful here.</div></p>
+
+<h2>Objectives</h2>
+
+<ol>
+	<li>Read the text from the user input.</li>
+	<li>Count the words in every sentence.</li>
+	<li>Count the average amount of words in the sentences.</li>
+	<li>Output the result.</li>
+</ol>
+
+<h2>Examples</h2>
+
+<p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
+
+<p><strong>Example 1</strong></p>
+
+<p>The first example contains two sentences with 6 and 10 words (numbers also counts as words), so the average is 8.</p>
+
+<pre><code class="language-no-highlight">&gt; This text is simple to read! It has on average less than 10 words per sentence.
+EASY                                                                             </code></pre>
+
+<p><strong>Example 2</strong></p>
+
+<p>The second example also contains 2 sentences with 6 and 16 words. The average is 11.</p>
+
+<pre><code class="language-no-highlight">&gt; This text is hard to read. It contains a lot of sentences as well as a lot of words in each sentence
+HARD                                                                                                  </code></pre>
